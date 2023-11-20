@@ -11,6 +11,12 @@ const {
   REST,
   Routes,
 } = require("discord.js");
+
+/**
+ * ● 명령어 등록 순서
+ * 1. 명령어 파일 생성 및 봇 읽기 설정
+ * 2. 봇 명령어 등록(이름/설명)
+ */
 /**
  * 봇 환경 설정
  */
@@ -37,7 +43,7 @@ client.once(Events.ClientReady, (c: any) => {
  * 모든 메세지 수신/발신시 발생하는 이벤트
  */
 client.on("messageCreate", (msg: any) => {
-  logger.debug("msg event triggered: " + msg.content);
+  logger.info("msg event triggered: " + msg.content);
 
   if (msg.author.bot) return;
   if (!msg.content.startsWith(prefix)) return;
@@ -67,7 +73,6 @@ for (const file of commandFiles) {
   const command = require(filePath);
 
   if ("data" in command && "execute" in command) {
-    logger.debug(command.data.name);
     client.commands.set(command.data.name, command);
   } else {
     logger.error(
@@ -79,7 +84,6 @@ for (const file of commandFiles) {
 /**
  * (/)으로 등록된 명령을 수행할 때 발생하는 이벤트(상호작용)
  */
-
 client.on("interactionCreate", async (i: any) => {
   logger.debug("interaction event triggered: " + i);
   if (!i.isChatInputCommand()) return;
@@ -110,15 +114,29 @@ client.on("interactionCreate", async (i: any) => {
  * 봇 명령어 등록(/)
  */
 const rest = new REST().setToken(process.env.BOT_TOKEN);
+const commands = [
+  {
+    name: "ping",
+    description: "ping",
+  },
+  {
+    name: "server",
+    description: "server",
+  },
+  {
+    name: "user",
+    description: "유저 조회",
+  },
+];
 
 (async () => {
   try {
     const data = await rest.put(
       Routes.applicationGuildCommands(
         process.env.CLIENT_ID,
-        process.env.GUILD_ID
+        process.env.CLIENT_ID_TEST
       ),
-      { body: client.commands.data }
+      { body: commands }
     );
 
     logger.debug(
