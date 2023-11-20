@@ -1,17 +1,14 @@
+import logger from "./config/winston";
+require("dotenv").config();
 const fs = require("node:fs");
 const path = require("node:path");
 const {
-  Discord,
   Client,
   Collection,
   Events,
   GatewayIntentBits,
   Partials,
 } = require("discord.js");
-
-require("dotenv").config();
-console.log(process.env);
-
 /**
  * 봇 환경 설정
  */
@@ -23,7 +20,7 @@ const client = new Client({
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.MessageContent,
   ],
-  partials: [Partials.Channel, Partials.Message],
+  partials: [Partials.Channel],
 });
 
 /**
@@ -31,14 +28,14 @@ const client = new Client({
  */
 client.login(process.env.BOT_TOKEN);
 client.once(Events.ClientReady, (c: any) => {
-  console.log(`Ready! Logged in as ${c.user.tag}`);
+  logger.warn(`Ready! Logged in as ${c.user.tag}`);
 });
 
 /**
  * 봇 메세지 수신/발신
  */
 client.on("messageCreate", (msg: any) => {
-  console.log("msg event triggered: " + msg.content);
+  logger.http("msg event triggered: " + msg.content);
 
   if (msg.author.bot) return;
   if (!msg.content.startsWith(prefix)) return;
@@ -63,44 +60,42 @@ const commandFiles = fs
     file.endsWith(process.env.NODE_ENV === "test" ? ".ts" : ".js")
   );
 
-console.log(commandFiles);
-
 for (const file of commandFiles) {
   const filePath = path.join(commandsPath, file);
   const command = require(filePath);
 
   if ("data" in command && "execute" in command) {
+    logger.info(command.data.name);
     client.commands.set(command.data.name, command);
   } else {
-    console.log(
+    logger.error(
       `[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`
     );
   }
 }
 
-console.log(client.commands);
-
 /**
- * 컬렉션을 기반으로 일치하는 명령을 수행
+ * 컬렉션을 기반으로 일치하는 명령을 수행(상호작용 이벤트)
  */
-client.on(Events.InteractionCreate, async (interaction: any) => {
-  if (!interaction.isChatInputCommand()) return;
-  const command = interaction.client.commands.get(interaction.commandName);
+client.on("interactionCreate", async (i: any) => {
+  console.log("interaction event triggered: " + i);
+  if (!i.isChatInputCommand()) return;
+  const command = i.client.commands.get(i.commandName);
   if (!command) {
-    console.error(`No command matching ${interaction.commandName} was found.`);
+    logger.error(`No command matching ${i.commandName} was found.`);
     return;
   }
   try {
-    await command.execute(interaction);
+    await command.execute(i);
   } catch (error) {
-    console.error(error);
-    if (interaction.replied || interaction.deferred) {
-      await interaction.followUp({
+    logger.error(error);
+    if (i.replied || i.deferred) {
+      await i.followUp({
         content: "There was an error while executing this command!",
         ephemeral: true,
       });
     } else {
-      await interaction.reply({
+      await i.reply({
         content: "There was an error while executing this command!",
         ephemeral: true,
       });
