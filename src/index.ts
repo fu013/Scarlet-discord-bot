@@ -1,3 +1,4 @@
+import getUser from "./api/getUser";
 import logger from "./config/winston";
 require("dotenv").config();
 const fs = require("node:fs");
@@ -13,10 +14,27 @@ const {
 } = require("discord.js");
 
 /**
+ * 외부 API와 HTTP 통신을 위한 웹 서버 실행
+ */
+/* const express = require("express");
+const app = express();
+const port = process.env.PORT || 9999;
+
+app.get("/", (req: any, res: any) => {
+  res.sendFile(__dirname + "/index.html");
+  getUser();
+});
+
+app.listen(port, () => {
+  console.log(`Web Server is running on port ${port}`);
+}); */
+
+/**
  * ● 명령어 등록 순서
  * 1. 명령어 파일 생성 및 봇 읽기 설정
  * 2. 봇 명령어 등록(이름/설명)
  */
+
 /**
  * 봇 환경 설정
  */
@@ -61,23 +79,27 @@ client.on("messageCreate", (msg: any) => {
  * 명령어 파일을 봇이 읽을 수 있도록 설정
  */
 client.commands = new Collection();
-const commandsPath = path.join(__dirname, "commands");
-const commandFiles = fs
-  .readdirSync(commandsPath)
-  .filter((file: any) =>
-    file.endsWith(process.env.NODE_ENV === "test" ? ".ts" : ".js")
-  );
+const foldersPath = path.join(__dirname, "commands");
+const commandFolders = fs.readdirSync(foldersPath);
 
-for (const file of commandFiles) {
-  const filePath = path.join(commandsPath, file);
-  const command = require(filePath);
-
-  if ("data" in command && "execute" in command) {
-    client.commands.set(command.data.name, command);
-  } else {
-    logger.error(
-      `[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`
+for (const folder of commandFolders) {
+  const commandsPath = path.join(foldersPath, folder);
+  const commandFiles = fs
+    .readdirSync(commandsPath)
+    .filter((file: any) =>
+      file.endsWith(process.env.NODE_ENV === "test" ? ".ts" : ".js")
     );
+  for (const file of commandFiles) {
+    const filePath = path.join(commandsPath, file);
+    const command = require(filePath);
+    if ("data" in command && "execute" in command) {
+      // console.log(client.commands);
+      client.commands.set(command.data.name, command);
+    } else {
+      console.log(
+        `[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`
+      );
+    }
   }
 }
 
@@ -92,6 +114,7 @@ client.on("interactionCreate", async (i: any) => {
     logger.error(`No command matching ${i.commandName} was found.`);
     return;
   }
+
   try {
     await command.execute(i);
   } catch (error) {
@@ -127,14 +150,17 @@ const commands = [
     name: "user",
     description: "유저 조회",
   },
+  {
+    name: "player",
+    description: "배틀매트릭스 테스트",
+  },
 ];
-
 (async () => {
   try {
     const data = await rest.put(
       Routes.applicationGuildCommands(
         process.env.CLIENT_ID,
-        process.env.CLIENT_ID_TEST
+        process.env.GUILD_ID_TEST
       ),
       { body: commands }
     );
