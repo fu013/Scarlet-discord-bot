@@ -8,6 +8,8 @@ const {
   Events,
   GatewayIntentBits,
   Partials,
+  REST,
+  Routes,
 } = require("discord.js");
 /**
  * 봇 환경 설정
@@ -28,14 +30,14 @@ const client = new Client({
  */
 client.login(process.env.BOT_TOKEN);
 client.once(Events.ClientReady, (c: any) => {
-  logger.warn(`Ready! Logged in as ${c.user.tag}`);
+  logger.debug(`Ready! Logged in as ${c.user.tag}`);
 });
 
 /**
- * 봇 메세지 수신/발신
+ * 모든 메세지 수신/발신시 발생하는 이벤트
  */
 client.on("messageCreate", (msg: any) => {
-  logger.http("msg event triggered: " + msg.content);
+  logger.debug("msg event triggered: " + msg.content);
 
   if (msg.author.bot) return;
   if (!msg.content.startsWith(prefix)) return;
@@ -65,7 +67,7 @@ for (const file of commandFiles) {
   const command = require(filePath);
 
   if ("data" in command && "execute" in command) {
-    logger.info(command.data.name);
+    logger.debug(command.data.name);
     client.commands.set(command.data.name, command);
   } else {
     logger.error(
@@ -75,10 +77,11 @@ for (const file of commandFiles) {
 }
 
 /**
- * 컬렉션을 기반으로 일치하는 명령을 수행(상호작용 이벤트)
+ * (/)으로 등록된 명령을 수행할 때 발생하는 이벤트(상호작용)
  */
+
 client.on("interactionCreate", async (i: any) => {
-  console.log("interaction event triggered: " + i);
+  logger.debug("interaction event triggered: " + i);
   if (!i.isChatInputCommand()) return;
   const command = i.client.commands.get(i.commandName);
   if (!command) {
@@ -102,3 +105,26 @@ client.on("interactionCreate", async (i: any) => {
     }
   }
 });
+
+/**
+ * 봇 명령어 등록(/)
+ */
+const rest = new REST().setToken(process.env.BOT_TOKEN);
+
+(async () => {
+  try {
+    const data = await rest.put(
+      Routes.applicationGuildCommands(
+        process.env.CLIENT_ID,
+        process.env.GUILD_ID
+      ),
+      { body: client.commands.data }
+    );
+
+    logger.debug(
+      `Successfully reloaded ${data.length} application (/) commands.`
+    );
+  } catch (error) {
+    logger.debug(error);
+  }
+})();
