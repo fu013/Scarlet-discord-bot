@@ -4,14 +4,24 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "tsc --build && node dist/index.js",
+    "build": "tsc --build",
+    "clean": "tsc --build --clean",
+    "test": "cross-env NODE_ENV=test nodemon",
+    "pm2": "NODE_ENV=development pm2 start src/index.ts --watch"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^14.14.1"
+    "cross-env": "^7.0.3",
+    "discord.js": "^14.14.1",
+    "dotenv": "^16.3.1",
+    "typescript": "^5.2.2"
   },
   "devDependencies": {
-    "eslint": "^8.54.0"
+    "eslint": "^8.54.0",
+    "nodemon": "^3.0.1",
+    "pm2": "^5.3.0",
+    "ts-node": "^10.9.1"
   }
 }
