@@ -2,7 +2,8 @@
 
 #### Reference
 
-- https://discordjs.guide
+- https://discordjs.guide => 봇 제작 가이드
+- https://www.writebots.com/discord-text-formatting => 봇 텍스트 컬러 포맷 이름
 
 #### Todo
 
