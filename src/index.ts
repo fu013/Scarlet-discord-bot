@@ -30,12 +30,6 @@ app.listen(port, () => {
 }); */
 
 /**
- * ● 명령어 등록 순서
- * 1. 명령어 파일 생성 및 봇 읽기 설정
- * 2. 봇 명령어 등록(이름/설명)
- */
-
-/**
  * 봇 환경 설정
  */
 const prefix = "!";
@@ -78,6 +72,7 @@ client.on("messageCreate", (msg: any) => {
 /**
  * 명령어 파일을 봇이 읽을 수 있도록 설정
  */
+const putCommands = [];
 client.commands = new Collection();
 const foldersPath = path.join(__dirname, "commands");
 const commandFolders = fs.readdirSync(foldersPath);
@@ -93,7 +88,7 @@ for (const folder of commandFolders) {
     const filePath = path.join(commandsPath, file);
     const command = require(filePath);
     if ("data" in command && "execute" in command) {
-      // console.log(client.commands);
+      putCommands.push(command.data);
       client.commands.set(command.data.name, command);
     } else {
       console.log(
@@ -137,24 +132,6 @@ client.on("interactionCreate", async (i: any) => {
  * 봇 명령어 등록(/)
  */
 const rest = new REST().setToken(process.env.BOT_TOKEN);
-const commands = [
-  {
-    name: "ping",
-    description: "ping",
-  },
-  {
-    name: "server",
-    description: "server",
-  },
-  {
-    name: "user",
-    description: "유저 조회",
-  },
-  {
-    name: "player",
-    description: "배틀매트릭스 테스트",
-  },
-];
 (async () => {
   try {
     const data = await rest.put(
@@ -162,7 +139,7 @@ const commands = [
         process.env.CLIENT_ID,
         process.env.GUILD_ID_TEST
       ),
-      { body: commands }
+      { body: putCommands }
     );
 
     logger.debug(
