@@ -1,4 +1,3 @@
-import getUser from "./api/getUser";
 import logger from "./config/winston";
 require("dotenv").config();
 const fs = require("node:fs");
@@ -137,7 +136,7 @@ const rest = new REST().setToken(process.env.BOT_TOKEN);
     const data = await rest.put(
       Routes.applicationGuildCommands(
         process.env.CLIENT_ID,
-        process.env.GUILD_ID_TEST
+        process.env.GUILD_ID_GOYANG
       ),
       { body: putCommands }
     );

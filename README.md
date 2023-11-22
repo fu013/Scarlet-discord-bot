@@ -9,3 +9,10 @@
 
 - 오라클 클라우드 계정 생성 시도
 - Response data JSON Beautify 할 방법 찾기
+
+### BOT 기능 정리
+
+#### MessageFormat
+
+- Embed 형태
+- CodeBlock 형태

@@ -19,6 +19,7 @@
     "noFallthroughCasesInSwitch": false,
     "esModuleInterop": true
   },
+  "include": ["src"],
   "watchOptions": {
     "watchFile": "fixedPollingInterval",
     "watchDirectory": "useFsEvents",
