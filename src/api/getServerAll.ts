@@ -7,6 +7,7 @@ const getServerAll = async () => {
     const queryParams = {
       include: "serverGroup",
       "filter[status]": "online",
+      "filter[search]": "solo",
       "filter[game]": "ark",
     };
     const res = await bmAxios.get(url, {
