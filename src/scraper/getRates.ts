@@ -3,7 +3,7 @@ import cheerio from "cheerio";
 import logger from "../config/winston";
 import { mapStringify } from "../lib/mapStringify";
 
-const getRates = async (typeIndex: number = 2) => {
+const getRates = async (typeIndex: any = 2) => {
   try {
     let myMap = new Map();
     const response = await axios.get(process.env.DODO_DEX_URL + "/rates", {
