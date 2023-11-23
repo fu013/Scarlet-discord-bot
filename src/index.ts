@@ -1,5 +1,5 @@
+import { myPool } from "./config/database";
 import logger from "./config/winston";
-import getRates from "./scraper/getRates";
 require("dotenv").config();
 const fs = require("node:fs");
 const path = require("node:path");
@@ -12,6 +12,18 @@ const {
   REST,
   Routes,
 } = require("discord.js");
+
+/**
+ * 데이터베이스 연결
+ */
+myPool.getConnection((err: any, connection: any) => {
+  if (err) {
+    logger.error("Error getting MySQL connection from pool:", err);
+    return;
+  }
+  logger.info("Connected to MySQL!");
+  connection.release();
+});
 
 /**
  * 외부 API와 HTTP 통신을 위한 웹 서버 실행

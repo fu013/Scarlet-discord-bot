@@ -2,8 +2,10 @@
 
 #### Reference
 
+- https://discord.com/developers/applications => 봇 리스트 확인
 - https://discordjs.guide => 봇 제작 가이드
 - https://www.writebots.com/discord-text-formatting => 봇 텍스트 컬러 포맷 이름
+- https://ark.wiki.gg/wiki/ARK_Wiki/ko => 아크 공식 위키
 
 #### Todo
 

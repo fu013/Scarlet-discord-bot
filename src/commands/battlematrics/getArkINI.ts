@@ -27,8 +27,8 @@ r.Nanite.MaxPixelsPerEdge 40000`;
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("ark-ini")
-    .setDescription("Provides information about the ini."),
+    .setName("아크-이니")
+    .setDescription("아크 이니 명령어를 출력합니다."),
   async execute(interaction: any) {
     await interaction.reply(makeCodeBlock(INI_TEXT));
   },

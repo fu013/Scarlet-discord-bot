@@ -53,8 +53,8 @@ const makeGreeting = () => {
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("hi")
-    .setDescription("Replies with Hello!"),
+    .setName("안녕")
+    .setDescription("랜덤 언어의 인사말을 출력합니다."),
   async execute(interaction: any) {
     await interaction.reply({ content: makeGreeting(), ephemeral: false });
   },
