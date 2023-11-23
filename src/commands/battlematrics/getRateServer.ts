@@ -19,7 +19,6 @@ module.exports = {
     ),
   async execute(i: any) {
     const type = i.options.getString("server-type");
-    console.log(i.options._hoistedOptions[0].name);
     await i.reply(makeCodeBlock(await getRates(type)));
   },
 };

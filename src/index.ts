@@ -72,7 +72,7 @@ client.on("messageCreate", (msg: any) => {
 /**
  * 명령어 파일을 봇이 읽을 수 있도록 설정
  */
-const putCommands = [];
+export const putCommands = [];
 client.commands = new Collection();
 const foldersPath = path.join(__dirname, "commands");
 const commandFolders = fs.readdirSync(foldersPath);
