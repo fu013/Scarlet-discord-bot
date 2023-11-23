@@ -3,7 +3,7 @@ import cheerio from "cheerio";
 import logger from "../config/winston";
 import { mapStringify } from "../lib/mapStringify";
 
-const getRates = async () => {
+const getRates = async (typeIndex: number = 2) => {
   try {
     let myMap = new Map();
     const response = await axios.get(process.env.DODO_DEX_URL + "/rates", {
@@ -11,8 +11,28 @@ const getRates = async () => {
         "User-Agent": "request",
       },
     });
+    let typeString = "official";
+    switch (parseInt(typeIndex)) {
+      case 0:
+        typeString = "New Arkpocalypse";
+        break;
+      case 1:
+        typeString = "New Small Tribes";
+        break;
+      case 2:
+        typeString = "official";
+        break;
+      case 3:
+        typeString = "Small Tribes";
+        break;
+      case 4:
+        typeString = "Arkpocalypse";
+        break;
+      default:
+        typeString = "official";
+    }
     const $ = cheerio.load(response.data);
-    const crawList = $(".server-rates").eq(2).find(".biggerNum");
+    const crawList = $(".server-rates").eq(typeIndex).find(".biggerNum");
     crawList
       .map((index) => {
         const title = crawList.eq(index).siblings("div").text();
@@ -20,7 +40,7 @@ const getRates = async () => {
         myMap.set(title, value);
       })
       .get();
-    return mapStringify(myMap);
+    return "Server Type: " + typeString + "\n" + mapStringify(myMap);
   } catch (error) {
     logger.error("Error occurred:", error);
   }

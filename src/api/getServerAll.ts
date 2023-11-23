@@ -20,7 +20,6 @@ const getServerAll = async () => {
 
     const serverList = [];
     res.data.data.forEach((item: any) => {
-      console.log(item?.attributes);
       const message = `서버명: ${item?.attributes?.name}\nid: ${item?.attributes?.id}\nip: ${item?.attributes?.ip}\n플레이어 수: ${item?.attributes?.players}\n생성일: ${item?.attributes?.createdAt}\n`;
       serverList.push(message);
     });
