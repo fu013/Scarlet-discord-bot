@@ -1,4 +1,5 @@
 import logger from "./config/winston";
+import getRates from "./scraper/getRates";
 require("dotenv").config();
 const fs = require("node:fs");
 const path = require("node:path");
