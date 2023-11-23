@@ -1,4 +1,4 @@
-const request = require("request");
+/* const request = require("request");
 var DOMParser = require("xmldom").DOMParser;
 var parser = new DOMParser();
 
@@ -62,3 +62,4 @@ async function crawlerTest() {
 }
 
 export default crawlerTest;
+ */
