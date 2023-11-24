@@ -17,7 +17,5 @@ services:
       dockerfile: ./Dockerfile
     ports:
       - "9999:9999"
-  services:
-    scarlet-discord-bot:
-      depends_on:
-        - scarlet-discord-bot-DB
+    depends_on:
+      - scarlet-discord-bot-DB
