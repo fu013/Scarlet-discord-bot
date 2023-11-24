@@ -29,6 +29,9 @@ sudo docker rmi -f $(docker images -q)
 sudo docker rm -f $(docker ps -qa)
 sudo killall containerd-shim
 
+echo "Docker 네트워크 삭제"
+sudo docker network rm -f $(docker network ls -q)
+
 echo "Docker 컨테이너 로그&볼륨 삭제(용량 비우기)"
 sudo docker system prune -af
 sudo docker volume rm $(docker volume ls -qf dangling=true)
