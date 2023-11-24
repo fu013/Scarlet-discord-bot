@@ -1,0 +1,136 @@
+개발 환경 통합 실행 sh 파일 실행 명령어
+bash /home/ubuntu/dogrimong/deploy.sh
+
+윈도우와 리눅스에서 사용하는 개행문자 (줄 바꿈 문자, New Line 문자) 
+가 달라서 발생하는 오류 해결
+윈도우에선 줄 바꿈을 CRLF (\r\n),
+리눅스에서는 LF (\n) 를 사용해서 바뀌는 문제
+해결 명령어 : sed -i 's/\r$//' 파일명
+
+서버에서 실행중인 포트번호 확인
+netstat -tnl // linux
+netstat -a -o // window
+
+포트 kill
+taskkill /f /pid
+
+주사용 포트 실행 종료
+sudo fuser -k 8080/tcp
+sudo fuser -k 27017/tcp
+sudo fuser -k 3306/tcp
+
+사용중인 메모리 조회
+free -h 
+
+가상 메모리 추가 + 스왑 설정(서버 재시작할때마다 초기화됨)
+sudo dd if=/dev/zero of=/mnt/swapfile bs=1M count=2048
+sudo mkswap /mnt/swapfile
+sudo swapon /mnt/swapfile
+
+스왑 메모리 해제
+sudo swapoff -v /mnt/swapfile
+sudo rm /mnt/swapfile
+
+도커 실행 중인 컨테이너 내부로 접근(디버깅, 시작 할때 유용)
+sudo docker exec -it c_name /bin/bash
+docker run 의 경우 새로운 컨테이너  환경을 만들며 내부로 접근하진 않음
+
+도커 컨테이너 모두 종료
+docker rm -f $(docker ps -qa)
+
+도커 컨테이너의 리소스 사용량 통계
+docker stats
+
+도키 이미지 모두 삭제
+docker rmi $(docker images -q)
+
+도커 사용되지 않는 컨테이너까지 모두 조회
+docker system df -v
+
+도커 사용하지 않는 컨테이너 삭제(로그까지 삭제되는듯)
+docker system prune -af
+or 시간 옵션
+docker system prune -af --filter "until=$((7*24))h"
+도커 사용하지 않는 볼륨 삭제
+docker volume rm $(docker volume ls -qf dangling=true)
+
+도커 특정 컨테이너 로그 보기(컨테이너 아이디로 검색)
+docker logs -f 89abc00d6602
+
+도커 stop이 안될때 강제
+sudo killall containerd-shim
+
+도커 stop이 안될때 시도해볼수있는것(AppArmor 제거, 권장X)
+sudo apt-get purge --auto-remove apparmor
+sudo service docker restart
+docker system prune --all --volumes
+
+AppArmor를 완전히 제거하고 싶지 않은 사람을 위한 것입니다.
+상태 확인: sudo aa-status
+종료 및 다시 시작 방지: sudo systemctl disable apparmor.service --now
+AppArmor 프로필 언로드: sudo service apparmor teardown
+상태 확인: sudo aa-status
+이제 컨테이너를 중지/종료할 수 있습니다.
+
+df -h
+리눅스/우분투의 잔여 용량을 확인할 수 있다
+
+docker-compose 쓰지 않고 따로 따로 구동했을때 명령어 순서
+
+1.
+cd /home/ubuntu/dogrimong/database
+docker compose up -d
+
+2.
+cd /home/ubuntu/dogrimong/backend
+docker build . -t server
+
+3.
+cd /home/ubuntu/dogrimong/frontend
+docker build . -t react
+
+4. 
+docker run --name server -p 3001:3001 server
+
+5. 
+docker run --name react -p 3000:3000 react
+
+docker run: -v 옵션시 소스 수정 후 리빌드 안해도 자동 반영
+
+docker network ls 도커 실행중인 네트워크 조회 / [option] --no-trunc 상세 정보 출력, -q, --quiet 네트워크 ID만 표시
+
+vsc remote에서 저장시 permission denied 에러가 날때
+sudo chown -R ubuntu:ubuntu /home/
+권한문제 해당 명령어로 해결
+
+깃 최근 커밋 없애기
+git reset HEAD^
+
+sudo apt dist-upgrade -y 에서 에러가 생길때
+해결 명령어 )
+sudo mv /var/lib/dpkg/info /var/lib/dpkg/info_silent
+sudo mkdir /var/lib/dpkg/info
+sudo apt-get update
+sudo apt-get -f install
+sudo mv /var/lib/dpkg/info/* /var/lib/dpkg/info_silent
+sudo rm -rf /var/lib/dpkg/info
+sudo mv /var/lib/dpkg/info_silent /var/lib/dpkg/info
+
+sudo apt install libssl1.1 설치중 Package 'libssl1.1' has no installation candidate 에러 발생시, 명령어
+sudo -i
+wget http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2_amd64.deb
+sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2_amd64.deb
+
+vscode sass->css 자동 변환 명령어
+npx sass --watch css/style.scss css/style.css
+
+연구원님 회의 진행했었던 HI-RTK 데모 사이트 접속 정보 공유드립니다.
+계정정보
+ID : demo@hni-gl.com
+PW : demo
+
+접속URL
+https://demo.hi-rtk.app/ccp
+
+docker network 확인
+docker network ls
