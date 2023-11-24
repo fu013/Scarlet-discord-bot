@@ -25,7 +25,7 @@ sudo kill `sudo lsof -t -i:3306`
 sudo kill `sudo lsof -t -i:9999`
 
 echo "Docker 컨테이너&이미지 삭제(용량 비우기)"
-sudo docker rmi $(docker images -q)
+sudo docker rmi -f $(docker images -q)
 sudo docker rm -f $(docker ps -qa)
 sudo killall containerd-shim
 
