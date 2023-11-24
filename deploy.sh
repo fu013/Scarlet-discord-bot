@@ -17,12 +17,16 @@ sudo swapon /mnt/swapfile
 echo "메모리 조회"
 sudo free -h
 
-echo "Docker 컨테이너&이미지 초기화"
+echo "필요한 포트 초기화"
+sudo fuser -k 9999/tcp
+sudo fuser -k 3306/tcp
+
+echo "Docker 컨테이너&이미지 삭제(용량 비우기)"
 sudo killall containerd-shim
 sudo docker rmi $(docker images -q)
 sudo docker rm -f $(docker ps -qa)
 
-echo "Docker 컨테이너 로그&볼륨 초기화"
+echo "Docker 컨테이너 로그&볼륨 삭제(용량 비우기)"
 sudo docker system prune -af
 sudo docker volume rm $(docker volume ls -qf dangling=true)
 
