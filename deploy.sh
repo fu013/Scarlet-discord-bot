@@ -20,12 +20,6 @@ free -h
 echo "디스크 조회"
 df -h
 
-echo "사용 포트 초기화"
-sudo kill `lsof -t -i:3306`
-
-echo "사용 포트 초기화2"
-sudo fuser -k 3306/tcp
-
 echo "Docker 컨테이너&이미지 삭제(용량 비우기)"
 docker rm -f $(docker ps -qa)
 killall containerd-shim
@@ -34,6 +28,12 @@ docker rmi -f $(docker images -q)
 echo "Docker 컨테이너 로그&볼륨 삭제(용량 비우기)"
 docker system prune -af
 docker volume rm $(docker volume ls -qf dangling=true)
+
+echo "사용 포트 초기화"
+sudo kill `lsof -t -i:3306`
+
+echo "사용 포트 초기화2"
+sudo fuser -k 3306/tcp
 
 echo "도커 컨테이너 배포"
 docker compose up -d

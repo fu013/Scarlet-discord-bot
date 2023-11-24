@@ -10,10 +10,11 @@ services:
       MYSQL_ROOT_PASSWORD: tmdcks2416@
     ports:
       - 3306:3306
-  app:
+  nodejs:
     container_name: scarlet-discord-bot
+    command: sleep infinity
     build:
-      context: ./
-      dockerfile: ./Dockerfile
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "9999:9999"
