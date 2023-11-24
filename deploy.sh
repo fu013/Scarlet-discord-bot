@@ -22,7 +22,6 @@ df -h
 
 echo "사용 포트 초기화"
 kill `lsof -t -i:3306`
-kill `lsof -t -i:9999`
 
 echo "Docker 컨테이너&이미지 삭제(용량 비우기)"
 docker rmi -f $(docker images -q)
