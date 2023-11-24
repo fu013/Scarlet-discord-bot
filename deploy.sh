@@ -21,7 +21,7 @@ echo "디스크 조회"
 df -h
 
 echo "사용 포트 초기화"
-kill `lsof -t -i:3306`
+sudo kill `lsof -t -i:3306`
 
 echo "사용 포트 초기화2"
 sudo fuser -k 3306/tcp
