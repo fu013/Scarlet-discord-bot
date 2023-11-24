@@ -12,7 +12,6 @@ services:
       - 3306:3306
   nodejs:
     container_name: scarlet-discord-bot
-    command: sleep infinity
     build:
       context: .
       dockerfile: Dockerfile
