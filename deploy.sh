@@ -27,12 +27,9 @@ echo "사용 포트 초기화2"
 sudo fuser -k 3306/tcp
 
 echo "Docker 컨테이너&이미지 삭제(용량 비우기)"
-docker rmi -f $(docker images -q)
 docker rm -f $(docker ps -qa)
 killall containerd-shim
-
-echo "Docker 네트워크 삭제"
-docker network rm -f $(docker network ls -q)
+docker rmi -f $(docker images -q)
 
 echo "Docker 컨테이너 로그&볼륨 삭제(용량 비우기)"
 docker system prune -af
