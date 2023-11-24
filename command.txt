@@ -134,3 +134,6 @@ https://demo.hi-rtk.app/ccp
 
 docker network 확인
 docker network ls
+
+하드확인
+df -h

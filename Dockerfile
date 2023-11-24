@@ -1,5 +1,6 @@
 # 노드 버전
 FROM node:20.0.0 as builder
+ENV PORT=9999
 
 # 작업 폴더 - 컨테이너로 복사
 WORKDIR /home/ssm-user/Scarlet-discord-bot
@@ -12,6 +13,8 @@ RUN npm run build
 
 # 실행중인 pm2 프로세스 초기화
 RUN pm2 kill
+
+EXPOSE $PORT
 
 # 프로세스 시작 명령어
 CMD ["pm2", "start"]
