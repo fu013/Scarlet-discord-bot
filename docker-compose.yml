@@ -1,15 +1,6 @@
 version: "3.8"
 
 services:
-  database:
-    container_name: scarlet-discord-bot-DB
-    image: mysql:8.0
-    restart: always
-    environment:
-      MYSQL_DATABASE: scarlet
-      MYSQL_ROOT_PASSWORD: tmdcks2416@
-    ports:
-      - 3306:3306
   app:
     container_name: scarlet-discord-bot
     build:
