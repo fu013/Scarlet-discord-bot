@@ -11,4 +11,4 @@ RUN npm install -g pm2
 RUN npm run build
 
 # 프로세스 시작 명령어
-CMD ["node ./dist/index.js"]
+CMD ["./dist/index.js"]
