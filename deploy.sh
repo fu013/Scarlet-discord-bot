@@ -17,7 +17,10 @@ sudo swapon /mnt/swapfile
 echo "메모리 조회"
 sudo free -h
 
-echo "필요한 포트 초기화"
+echo "디스크 조회"
+sudo df -h
+
+echo "사용 포트 초기화"
 sudo fuser -k 3306/tcp
 sudo fuser -k 9999/tcp
 
