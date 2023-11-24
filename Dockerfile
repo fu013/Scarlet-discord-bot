@@ -11,5 +11,4 @@ RUN npm install -g pm2
 RUN npm run build
 
 # 프로세스 시작 명령어
-CMD ["pm2", "start"]
-ENTRYPOINT ["tail", "-f", "/dev/null"]
+CMD ["npm", "run start"]
