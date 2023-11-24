@@ -18,8 +18,8 @@ echo "메모리 조회"
 sudo free -h
 
 echo "필요한 포트 초기화"
-sudo fuser -k 9999/tcp
 sudo fuser -k 3306/tcp
+sudo fuser -k 9999/tcp
 
 echo "Docker 컨테이너&이미지 삭제(용량 비우기)"
 sudo killall containerd-shim

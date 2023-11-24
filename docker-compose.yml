@@ -14,7 +14,7 @@ services:
     container_name: scarlet-discord-bot
     command: sleep infinity
     build:
-      context: ./
-      dockerfile: ./Dockerfile
+      context: /home/ssm-user/Scarlet-discord-bot
+      dockerfile: /home/ssm-user/Scarlet-discord-bot/Dockerfile
     ports:
       - "9999:9999"
