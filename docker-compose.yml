@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   database:
-    container_name: scarlet_bot_mysql
+    container_name: scarlet-discord-bot-DB
     image: mysql:8.0
     restart: always
     environment:
@@ -11,9 +11,9 @@ services:
     ports:
       - 3306:3306
   app:
-    container_name: scarlet_bot_app
+    container_name: scarlet-discord-bot
     build:
-      context: /home/ssm-user/Scarlet-discord-bot
-      dockerfile: /home/ssm-user/Scarlet-discord-bot/Dockerfile
+      context: ./
+      dockerfile: ./Dockerfile
     ports:
       - "9999:9999"
