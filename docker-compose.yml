@@ -16,4 +16,4 @@ services:
       context: /home/ssm-user/Scarlet-discord-bot
       dockerfile: /home/ssm-user/Scarlet-discord-bot/Dockerfile
     ports:
-      - "5000:443"
+      - "9999:9999"
