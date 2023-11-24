@@ -21,8 +21,8 @@ echo "디스크 조회"
 sudo df -h
 
 echo "사용 포트 초기화"
-sudo fuser -k 3306/tcp
-sudo fuser -k 9999/tcp
+sudo kill `sudo lsof -t -i:3306`
+sudo kill `sudo lsof -t -i:9999`
 
 echo "Docker 컨테이너&이미지 삭제(용량 비우기)"
 sudo killall containerd-shim
