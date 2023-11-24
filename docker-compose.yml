@@ -14,6 +14,6 @@ services:
     container_name: scarlet_bot_app
     build:
       context: /home/ssm-user/Scarlet-discord-bot
-      dockerfile: /home/ssm-user/Dockerfile
+      dockerfile: /home/ssm-user/Scarlet-discord-bot/Dockerfile
     ports:
       - "5000:443"
