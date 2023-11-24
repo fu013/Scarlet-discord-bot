@@ -121,17 +121,6 @@ sudo -i
 wget http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2_amd64.deb
 sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2_amd64.deb
 
-vscode sass->css 자동 변환 명령어
-npx sass --watch css/style.scss css/style.css
-
-연구원님 회의 진행했었던 HI-RTK 데모 사이트 접속 정보 공유드립니다.
-계정정보
-ID : demo@hni-gl.com
-PW : demo
-
-접속URL
-https://demo.hi-rtk.app/ccp
-
 docker network 확인
 docker network ls
 
