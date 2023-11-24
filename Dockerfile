@@ -11,7 +11,7 @@ RUN npm install -g pm2
 RUN npm run build
 
 # 실행중인 pm2 프로세스 초기화
-RUN pm2 kill
+# RUN pm2 kill
 
 # 프로세스 시작 명령어
 CMD ["pm2", "start"]
