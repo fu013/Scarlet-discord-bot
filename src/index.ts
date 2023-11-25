@@ -149,7 +149,9 @@ const rest = new REST().setToken(process.env.BOT_TOKEN);
     const data = await rest.put(
       Routes.applicationGuildCommands(
         process.env.CLIENT_ID,
-        process.env.GUILD_ID_TEST
+        process.env.NODE_ENV === "prod"
+          ? process.env.GUILD_ID_GOYANG
+          : process.env.GUILD_ID_TEST
       ),
       { body: putCommands }
     );

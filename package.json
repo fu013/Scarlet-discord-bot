@@ -8,7 +8,7 @@
     "build": "tsc --build",
     "clean": "tsc --build --clean",
     "test": "cross-env NODE_ENV=test nodemon",
-    "pm2": "NODE_ENV=development NODE_PATH=./src pm2 start src/index.ts --watch"
+    "pm2": "NODE_ENV=dev NODE_PATH=./src pm2 start src/index.ts --watch"
   },
   "author": "",
   "license": "ISC",

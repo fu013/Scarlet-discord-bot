@@ -8,11 +8,11 @@ module.exports = {
       watch: false,
       max_memory_restart: "2500M",
       env: {
-        NODE_ENV: "dev",
-      },
-      env_production: {
         NODE_ENV: "prod",
       },
+      /* env_production: {
+        NODE_ENV: "prod",
+      }, */
     },
   ],
 };
