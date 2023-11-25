@@ -10,5 +10,7 @@ RUN npm install --silent
 RUN npm install -g pm2
 RUN npm run build
 
+RUN pm2 start
+
 # 프로세스 시작 명령어
-CMD ["./dist/index.js"]
+CMD ["pm2", "monit"]
