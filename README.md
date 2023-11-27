@@ -18,3 +18,9 @@
 
 - Embed 형태
 - CodeBlock 형태
+
+#### docker pm2
+
+- 컨테이너가 살아있으려면 forground process가 필요함
+- foreground process : 쉘(shell)에서 해당 프로세스 실행을 명령한 후, 해당 프로세스 수행 종료까지 사용자가 다른 입력을 하지 못하는 프로세스
+- 즉 pm2로 돌리려면 pm2 start가 아닌 pm2-runtime으로 구동시켜줘야함

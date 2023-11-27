@@ -9,8 +9,7 @@ COPY . .
 RUN npm install --silent
 RUN npm install -g pm2
 RUN npm run build
-
-RUN pm2 start
+EXPOSE 9999
 
 # 프로세스 시작 명령어
-CMD ["pm2", "monit"]
+CMD ["npm", "run", "start:prod"]

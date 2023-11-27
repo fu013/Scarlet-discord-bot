@@ -9,7 +9,7 @@ services:
       MYSQL_DATABASE: scarlet
       MYSQL_ROOT_PASSWORD: tmdcks2416@
     ports:
-      - 3306:3306
+      - 9998:3306
   app:
     container_name: scarlet-discord-bot
     build:

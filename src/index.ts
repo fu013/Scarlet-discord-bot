@@ -26,11 +26,11 @@ myPool.getConnection((err: any, connection: any) => {
 });
 
 /**
- * 외부 API와 HTTP 통신을 위한 웹 서버 실행
+ * 웹 서버 설정 및 실행(9999 포트)
  */
 /* const express = require("express");
 const app = express();
-const port = process.env.PORT || 9999;
+const port = process.env.APP_PORT || 9999;
 
 app.get("/", (req: any, res: any) => {
   res.sendFile(__dirname + "/index.html");

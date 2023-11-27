@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "tsc --build && node dist/index.js",
+    "start:dev": "cross-env NODE_ENV=dev --build && node dist/index.js",
+    "start:text": "cross-env NODE_ENV=test nodemon",
+    "start:prod": "cross-env NODE_ENV=prod pm2-runtime start ecosystem.config.js",
     "build": "tsc --build",
-    "clean": "tsc --build --clean",
-    "test": "cross-env NODE_ENV=test nodemon",
-    "pm2": "NODE_ENV=dev NODE_PATH=./src pm2 start src/index.ts --watch"
+    "clean": "tsc --build --clean"
   },
   "author": "",
   "license": "ISC",
