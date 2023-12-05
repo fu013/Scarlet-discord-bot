@@ -12,3 +12,9 @@ export const doAxios = axios.create({
     "User-Agent": "request",
   },
 });
+export const ntAxios = axios.create({
+  baseURL: process.env.NITRADO_API_URL + "/",
+  headers: {
+    Authorization: process.env.NITRADO_API_TOKEN,
+  },
+});
