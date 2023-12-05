@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start:dev": "cross-env NODE_ENV=dev --build && node dist/index.js",
-    "start:text": "cross-env NODE_ENV=test nodemon",
+    "start:test": "cross-env NODE_ENV=test nodemon",
     "start:prod": "cross-env NODE_ENV=prod pm2-runtime start ecosystem.config.js",
     "build": "tsc --build",
     "clean": "tsc --build --clean"
