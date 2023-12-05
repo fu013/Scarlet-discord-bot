@@ -7,9 +7,8 @@ import { myPool } from "../../config/database";
  */
 const getServerInfoById_nt = async (serverID: string) => {
   try {
-    const res = await ntAxios.get(`services/${serverID}`);
-    console.log(res);
-    return JSON.stringify(res.data.data, null, 2);
+    const res = await ntAxios.get(`services/${serverID}/gameservers`);
+    return JSON.stringify(res.data.data.gameserver.query, null, 2);
   } catch (error) {
     logger.error(error);
     throw error;
